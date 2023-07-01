@@ -22,6 +22,5 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init(&philo, argv, argc))
 		return (1);
-	printf("nbr philo = %d\ntime die %d\ntime eat %d\ntime sleep %d\ntime of eat %d\n", philo.number, philo.die, philo.eat, philo.sleep, philo.eatmin);
 	return (0);
 }
