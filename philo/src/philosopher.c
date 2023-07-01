@@ -18,9 +18,9 @@ int	main(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 		return (printf("Philo error: wrong number of args\n"), 1);
-	if (check_args(argv))
+	if (ft_check_args(argv))
 		return (1);
-	if (init(&philo, argv, argc))
+	if (ft_init(&philo, argv, argc))
 		return (1);
 	return (0);
 }

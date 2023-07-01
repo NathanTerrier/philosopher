@@ -12,7 +12,7 @@
 
 #include "../philosopher.h"
 
-int	ft_isnum(char *str)
+static int	ft_isnum(char *str)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	ft_isnum(char *str)
 	return (0);
 }
 
-int	check_args(char **args)
+int	ft_check_args(char **args)
 {
 	int	i;
 

@@ -25,7 +25,7 @@ typedef struct philo
 	int	eatmin;
 }	t_philo;
 
-int	check_args(char **args);
-int	init(t_philo *philo, char **argv, int argc);
+int	ft_check_args(char **args);
+int	ft_init(t_philo *philo, char **argv, int argc);
 
 #endif

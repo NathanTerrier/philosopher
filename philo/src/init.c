@@ -12,7 +12,7 @@
 
 #include "../philosopher.h"
 
-int	check_atoi(t_philo *philo)
+static int	check_atoi(t_philo *philo)
 {
 	if (philo->number < 1)
 		return (printf("Philo error: wrong number of philo\n"), 1);
@@ -27,7 +27,7 @@ int	check_atoi(t_philo *philo)
 	return (0);
 }
 
-int	ft_atoi(char *str)
+static int	ft_atoi(char *str)
 {
 	int	i;
 	int	value;
@@ -51,7 +51,7 @@ int	ft_atoi(char *str)
 	return (value *= neg);
 }
 
-int	init(t_philo *philo, char **argv, int argc)
+int	ft_init(t_philo *philo, char **argv, int argc)
 {
 	philo->number = ft_atoi(argv[1]);
 	philo->die = ft_atoi(argv[2]);
