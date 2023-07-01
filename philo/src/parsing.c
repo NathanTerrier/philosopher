@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosopher.h"
+#include "philosopher.h"
 
 static int	ft_isnum(char *str)
 {

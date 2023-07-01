@@ -10,15 +10,6 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME =	philosopher
-HEADERS = $(NAME).h
-CFLAGS = -Wall -Werror -Wextra
-
-DIR_SRCS := src
-DIR_OBJS := .objs
-
-OBJS =	$(addprefix $(DIR_OBJS)/, $(SRCS:.c=.o))
-
 BLEU := \033[36m
 PURPLE := \033[35m
 GREEN := \033[32m
@@ -26,17 +17,30 @@ RED := \033[31m
 RESET := \033[0m
 ERASE := \033[2K\033[1A\r
 
+DIR_SRCS := src
+DIR_OBJS := .objs
+
+OBJS =	$(addprefix $(DIR_OBJS)/, $(SRCS:.c=.o))
+
+NAME =	philosopher
+
+CFLAGS = -Wall -Werror -Wextra -I $(INC_DIR) -g3
+
+HEADERS = $(NAME).h
+INC_DIR = includes
+INC		= $(addprefix $(INC_DIR)/, $(HEADERS))
+
 SRCS =	philosopher.c \
 		parsing.c \
 		init.c
 
 all: $(NAME)
 
-$(NAME): $(DIR_OBJS) $(OBJS)
-	cc $(CFLAGS) -o $(NAME) $(OBJS)
+$(NAME): $(DIR_OBJS) $(OBJS) $(LIB)
+	cc $(CFLAGS) $(OBJS) $(LIB) -o $(NAME)
 	echo "$(GREEN)✅ $(NAME) compilated !"
 
-$(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(HEADERS) Makefile
+$(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(INC) Makefile
 	echo "$(GREEN)⏳ Making $(NAME)"
 	printf "$(BLEU) ⮡ Making $(RESET)$@$(RED)"
 	cc $(CFLAGS) -c $< -o $@ -I.
@@ -45,8 +49,6 @@ $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(HEADERS) Makefile
 
 $(DIR_OBJS):
 	mkdir -p $@
-
-force :
 
 clean:
 	echo "$(PURPLE)🧹Removing $(NAME).o files !"

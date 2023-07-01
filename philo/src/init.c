@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosopher.h"
+#include "philosopher.h"
 
 static int	check_atoi(t_info *info)
 {
