@@ -14,13 +14,13 @@
 
 int	main(int argc, char **argv)
 {
-	t_philo	philo;
+	t_info	info;
 
 	if (argc != 5 && argc != 6)
 		return (printf("Philo error: wrong number of args\n"), 1);
 	if (ft_check_args(argv))
 		return (1);
-	if (ft_init(&philo, argv, argc))
+	if (ft_init(&info, argv, argc))
 		return (1);
 	return (0);
 }

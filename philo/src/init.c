@@ -12,17 +12,17 @@
 
 #include "../philosopher.h"
 
-static int	check_atoi(t_philo *philo)
+static int	check_atoi(t_info *info)
 {
-	if (philo->number < 1)
+	if (info->number < 1)
 		return (printf("Philo error: wrong number of philo\n"), 1);
-	if (philo->die < 1)
+	if (info->die < 1)
 		return (printf("Philo error: wrong time for die\n"), 1);
-	if (philo->eat < 1)
+	if (info->eat < 1)
 		return (printf("Philo error: wrong time for eat\n"), 1);
-	if (philo->sleep < 1)
+	if (info->sleep < 1)
 		return (printf("Philo error: wrong time for sleep\n"), 1);
-	if (philo->eatmin < 0)
+	if (info->eatmin < 0)
 		return (printf("Philo error: wrong time of eat\n"), 1);
 	return (0);
 }
@@ -51,17 +51,17 @@ static int	ft_atoi(char *str)
 	return (value *= neg);
 }
 
-int	ft_init(t_philo *philo, char **argv, int argc)
+int	ft_init(t_info *info, char **argv, int argc)
 {
-	philo->number = ft_atoi(argv[1]);
-	philo->die = ft_atoi(argv[2]);
-	philo->eat = ft_atoi(argv[3]);
-	philo->sleep = ft_atoi(argv[4]);
+	info->number = ft_atoi(argv[1]);
+	info->die = ft_atoi(argv[2]);
+	info->eat = ft_atoi(argv[3]);
+	info->sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		philo->eatmin = ft_atoi(argv[5]);
+		info->eatmin = ft_atoi(argv[5]);
 	else
-		philo->eatmin = 0;
-	if (check_atoi(philo))
+		info->eatmin = 0;
+	if (check_atoi(info))
 		return (1);
 	return (0);
 }

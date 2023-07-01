@@ -16,16 +16,16 @@
 # include <unistd.h>
 # include <stdio.h>
 
-typedef struct philo
+typedef struct info
 {
 	int	number;
 	int	die;
 	int	eat;
 	int	sleep;
 	int	eatmin;
-}	t_philo;
+}	t_info;
 
 int	ft_check_args(char **args);
-int	ft_init(t_philo *philo, char **argv, int argc);
+int	ft_init(t_info *info, char **argv, int argc);
 
 #endif
