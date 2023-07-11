@@ -35,7 +35,8 @@ SRCS =	main.c \
 		init.c \
 		routine.c \
 		actions.c \
-		utils.c
+		utils.c \
+		time.c
 
 all: $(NAME)
 

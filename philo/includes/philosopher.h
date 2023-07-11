@@ -48,7 +48,7 @@ int		ft_check_args(char **args);
 int		ft_init(t_info *info, char **argv, int argc);
 
 // Routine //
-void	ft_start_routine(t_info *info);
+int		ft_start_routine(t_info *info);
 
 // Actions //
 void	ft_eat(t_philo *philo);
@@ -59,5 +59,8 @@ void	ft_think(t_philo *philo);
 void	ft_usleep(t_philo *philo, int time);
 void	ft_check_ded(t_philo *philo);
 void	ft_print(t_philo *philo, char *str);
+
+// Time //
+int		ft_get_time(void);
 
 #endif
