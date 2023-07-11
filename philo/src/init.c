@@ -14,7 +14,7 @@
 
 static int	check_atoi(t_info *info)
 {
-	if (info->number < 1)
+	if (info->number_ph < 1)
 		return (printf("Philo error: wrong number of philo\n"), 1);
 	if (info->die < 1)
 		return (printf("Philo error: wrong time for die\n"), 1);
@@ -53,7 +53,10 @@ static int	ft_atoi(char *str)
 
 int	ft_init(t_info *info, char **argv, int argc)
 {
-	info->number = ft_atoi(argv[1]);
+	int	i;
+
+	i = 0;
+	info->number_ph = ft_atoi(argv[1]);
 	info->die = ft_atoi(argv[2]);
 	info->eat = ft_atoi(argv[3]);
 	info->sleep = ft_atoi(argv[4]);
@@ -63,5 +66,16 @@ int	ft_init(t_info *info, char **argv, int argc)
 		info->eatmin = 0;
 	if (check_atoi(info))
 		return (1);
+	info->philo = malloc(sizeof(t_philo *) * info->number_ph);
+	if (!info->philo)
+		return (printf("Philo error: malloc error\n"), 1);
+	while (i < info->number_ph)
+	{
+		info->philo[i].id = i;
+		info->philo[i].last_eat = 0;
+		info->philo[i].eat_count = 0;
+		info->philo[i].info = info;
+		info->philo[i].lfork = info->philo[i - 1].fork;
+	}
 	return (0);
 }

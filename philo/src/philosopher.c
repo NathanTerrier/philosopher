@@ -22,5 +22,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (ft_init(&info, argv, argc))
 		return (1);
+	ft_start_routine(&info);
+	free(info.philo);
 	return (0);
 }

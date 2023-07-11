@@ -32,13 +32,17 @@ INC		= $(addprefix $(INC_DIR)/, $(HEADERS))
 
 SRCS =	philosopher.c \
 		parsing.c \
-		init.c
+		init.c \
+		routine.c \
+		actions.c \
+		utils.c
 
 all: $(NAME)
 
 $(NAME): $(DIR_OBJS) $(OBJS) $(LIB)
 	cc $(CFLAGS) $(OBJS) $(LIB) -o $(NAME)
 	echo "$(GREEN)✅ $(NAME) compilated !"
+	@norminette | awk '$$NF!="OK!" {print "$(RED)" $$0 "$(WHITE)"}'
 
 $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(INC) Makefile
 	echo "$(GREEN)⏳ Making $(NAME)"

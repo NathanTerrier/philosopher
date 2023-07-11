@@ -13,19 +13,48 @@
 #ifndef PHILOSOPHER_H
 # define PHILOSOPHER_H
 
+# include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <pthread.h>
 
-typedef struct info
+typedef struct s_info
 {
-	int	number;
-	int	die;
-	int	eat;
-	int	sleep;
-	int	eatmin;
+	int				number_ph;
+	int				die;
+	int				eat;
+	int				sleep;
+	int				eatmin;
+	struct s_philo	*philo;
 }	t_info;
 
-int	ft_check_args(char **args);
-int	ft_init(t_info *info, char **argv, int argc);
+typedef struct s_philo
+{
+	struct s_info	*info;
+	int				id;
+	int				eat_count;
+	int				last_eat;
+	pthread_t		thread;
+	pthread_mutex_t	lfork;
+	pthread_mutex_t	fork;
+}	t_philo;
+
+// Parsing //
+int		ft_check_args(char **args);
+
+// Initialization //
+int		ft_init(t_info *info, char **argv, int argc);
+
+// Routine //
+void	ft_start_routine(t_info *info);
+
+// Actions //
+void	ft_eat(t_philo *philo);
+void	ft_sleep(t_philo *philo);
+void	ft_think(t_philo *philo);
+
+// Utils //
+void	ft_usleep(t_philo *philo, int time);
+void	ft_check_ded(t_philo *philo);
 
 #endif
