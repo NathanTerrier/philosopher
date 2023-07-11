@@ -24,13 +24,13 @@ OBJS =	$(addprefix $(DIR_OBJS)/, $(SRCS:.c=.o))
 
 NAME =	philosopher
 
-CFLAGS = -Wall -Werror -Wextra -I $(INC_DIR) -g3
+CFLAGS = -Wall -Werror -Wextra -I $(INC_DIR) -g3 -pthread
 
 HEADERS = $(NAME).h
 INC_DIR = includes
 INC		= $(addprefix $(INC_DIR)/, $(HEADERS))
 
-SRCS =	philosopher.c \
+SRCS =	main.c \
 		parsing.c \
 		init.c \
 		routine.c \

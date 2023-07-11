@@ -6,7 +6,7 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:00:33 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/11 11:22:27 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2023/07/11 14:42:42 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void	*ft_philo_routine(void *arg)
 		ft_sleep(philo);
 		ft_think(philo);
 	}
-	return (0);
 }
 
 void	ft_start_routine(t_info *info)
@@ -34,7 +33,7 @@ void	ft_start_routine(t_info *info)
 	while (i < info->number_ph)
 	{
 		if (pthread_create(&info->philo[i].thread, NULL, \
-			&ft_philo_routine, &info->philo[i]))
+			&ft_philo_routine, &info->philo[i]) != 0)
 		{
 			printf("Philo error: pthread_create\n");
 			exit(1);

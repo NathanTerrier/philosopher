@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 typedef struct s_info
 {
@@ -25,6 +26,7 @@ typedef struct s_info
 	int				eat;
 	int				sleep;
 	int				eatmin;
+	long long int	start;
 	struct s_philo	*philo;
 }	t_info;
 
@@ -56,5 +58,6 @@ void	ft_think(t_philo *philo);
 // Utils //
 void	ft_usleep(t_philo *philo, int time);
 void	ft_check_ded(t_philo *philo);
+void	ft_print(t_philo *philo, char *str);
 
 #endif

@@ -51,11 +51,30 @@ static int	ft_atoi(char *str)
 	return (value *= neg);
 }
 
-int	ft_init(t_info *info, char **argv, int argc)
+void	ft_init_philo(t_info *info)
 {
 	int	i;
 
 	i = 0;
+	info->philo = malloc(sizeof(t_philo *) * info->number_ph);
+	if (!info->philo)
+	{
+		printf("Philo error: malloc error\n");
+		return ;
+	}
+	while (i < info->number_ph)
+	{
+		info->philo[i].id = i;
+		info->philo[i].last_eat = 0;
+		info->philo[i].eat_count = 0;
+		info->philo[i].info = info;
+		info->philo[i].lfork = info->philo[i - 1].fork;
+		i++;
+	}
+}
+
+int	ft_init(t_info *info, char **argv, int argc)
+{
 	info->number_ph = ft_atoi(argv[1]);
 	info->die = ft_atoi(argv[2]);
 	info->eat = ft_atoi(argv[3]);
@@ -66,16 +85,6 @@ int	ft_init(t_info *info, char **argv, int argc)
 		info->eatmin = 0;
 	if (check_atoi(info))
 		return (1);
-	info->philo = malloc(sizeof(t_philo *) * info->number_ph);
-	if (!info->philo)
-		return (printf("Philo error: malloc error\n"), 1);
-	while (i < info->number_ph)
-	{
-		info->philo[i].id = i;
-		info->philo[i].last_eat = 0;
-		info->philo[i].eat_count = 0;
-		info->philo[i].info = info;
-		info->philo[i].lfork = info->philo[i - 1].fork;
-	}
+	ft_init_philo(info);
 	return (0);
 }
