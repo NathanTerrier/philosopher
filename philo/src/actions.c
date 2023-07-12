@@ -6,7 +6,7 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:46:35 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/12 14:13:39 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2023/07/12 15:21:34 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	ft_eat(t_philo *philo)
 		return ;
 	if (pthread_mutex_lock(&philo->fork))
 		return ;
+	ft_print(philo, "has taken a fork");
 	philo->last_eat = ft_get_time() - philo->info->start;
+	printf("last time = %d", philo->last_eat);
 	ft_print(philo, "is eating");
 	ft_usleep(philo, philo->info->eat);
 	pthread_mutex_unlock(philo->lfork);
