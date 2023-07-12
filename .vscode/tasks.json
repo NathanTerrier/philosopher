@@ -1,0 +1,23 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "philo",
+            "command": "/usr/bin/make",
+            "args": [
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/philo"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Tâche générée par le débogueur."
+        }
+    ],
+    "version": "2.0.0"
+}

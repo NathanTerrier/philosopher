@@ -37,7 +37,7 @@ typedef struct s_philo
 	int				eat_count;
 	int				last_eat;
 	pthread_t		thread;
-	pthread_mutex_t	lfork;
+	pthread_mutex_t	*lfork;
 	pthread_mutex_t	fork;
 }	t_philo;
 
@@ -57,8 +57,9 @@ void	ft_think(t_philo *philo);
 
 // Utils //
 void	ft_usleep(t_philo *philo, int time);
-void	ft_check_ded(t_philo *philo);
 void	ft_print(t_philo *philo, char *str);
+void	ft_check_ded(t_philo *philo);
+t_info	*ft_get_info(void);
 
 // Time //
 int		ft_get_time(void);

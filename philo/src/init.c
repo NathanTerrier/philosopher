@@ -14,7 +14,7 @@
 
 static int	check_atoi(t_info *info)
 {
-	if (info->number_ph < 1)
+	if (info->number_ph < 2)
 		return (printf("Philo error: wrong number of philo\n"), 1);
 	if (info->die < 1)
 		return (printf("Philo error: wrong time for die\n"), 1);
@@ -51,26 +51,30 @@ static int	ft_atoi(char *str)
 	return (value *= neg);
 }
 
-void	ft_init_philo(t_info *info)
+static int	ft_init_philo(t_info *info)
 {
 	int	i;
 
 	i = 0;
-	info->philo = malloc(sizeof(t_philo *) * info->number_ph);
+
+	info->philo = malloc(sizeof(t_philo) * info->number_ph);
 	if (!info->philo)
-	{
-		printf("Philo error: malloc error\n");
-		return ;
-	}
+		return (printf("Philo error: malloc error\n"), exit(1), 1);
 	while (i < info->number_ph)
 	{
 		info->philo[i].id = i;
 		info->philo[i].last_eat = 0;
 		info->philo[i].eat_count = 0;
 		info->philo[i].info = info;
-		info->philo[i].lfork = info->philo[i - 1].fork;
+		if (i != 0)
+			info->philo[i].lfork = &info->philo[i - 1].fork;
+		if (pthread_mutex_init(&info->philo[i].fork, NULL))
+			return (printf("Philo error: mutex init error\n"), \
+			free(ft_get_info()->philo), exit(1), 1);
 		i++;
 	}
+	info->philo[0].lfork = &info->philo[i - 1].fork;
+	return (0);
 }
 
 int	ft_init(t_info *info, char **argv, int argc)
