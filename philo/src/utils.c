@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: aviscogl <aviscogl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:16:41 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/12 14:16:45 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2023/07/13 13:02:50 by aviscogl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-
-void	ft_check_ded(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	if (philo->last_eat >= philo->info->die)
-	{
-		ft_print(philo, "is dead\n");
-		while (i < philo->info->number_ph)
-			pthread_mutex_destroy(&philo->info->philo[i++].fork);
-		free(philo->info->philo);
-		exit(0);
-	}
-}
 
 void	ft_usleep(t_philo *philo, int time)
 {
@@ -52,4 +37,18 @@ t_info	*ft_get_info(void)
 	static t_info	*info;
 
 	return (info);
+}
+
+void	ft_exit(t_philo *philo, int code)
+{
+	int	i;
+
+	i = 0;
+	while (i < philo->info->number_ph)
+	{
+		pthread_mutex_destroy(&philo->info->philo[i].fork);
+		i++;
+	}
+	free(philo->info->philo);
+	exit (code);
 }

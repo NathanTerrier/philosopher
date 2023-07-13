@@ -22,7 +22,7 @@ static int	check_atoi(t_info *info)
 		return (printf("Philo error: wrong time for eat\n"), 1);
 	if (info->sleep < 1)
 		return (printf("Philo error: wrong time for sleep\n"), 1);
-	if (info->eatmin < 0)
+	if (info->must_eat < 0)
 		return (printf("Philo error: wrong time of eat\n"), 1);
 	return (0);
 }
@@ -84,9 +84,9 @@ int	ft_init(t_info *info, char **argv, int argc)
 	info->eat = ft_atoi(argv[3]);
 	info->sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		info->eatmin = ft_atoi(argv[5]);
+		info->must_eat = ft_atoi(argv[5]);
 	else
-		info->eatmin = 0;
+		info->must_eat = 0;
 	if (check_atoi(info))
 		return (1);
 	ft_init_philo(info);

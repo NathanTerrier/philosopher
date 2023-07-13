@@ -25,7 +25,7 @@ typedef struct s_info
 	int				die;
 	int				eat;
 	int				sleep;
-	int				eatmin;
+	int				must_eat;
 	long long int	start;
 	struct s_philo	*philo;
 }	t_info;
@@ -54,11 +54,13 @@ int		ft_start_routine(t_info *info);
 void	ft_eat(t_philo *philo);
 void	ft_sleep(t_philo *philo);
 void	ft_think(t_philo *philo);
+void	ft_all_eat(t_philo *philo);
+void	ft_check_ded(t_philo *philo);
 
 // Utils //
 void	ft_usleep(t_philo *philo, int time);
 void	ft_print(t_philo *philo, char *str);
-void	ft_check_ded(t_philo *philo);
+void	ft_exit(t_philo *philo, int code);
 t_info	*ft_get_info(void);
 
 // Time //
