@@ -6,7 +6,7 @@
 /*   By: aviscogl <aviscogl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:00:33 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/13 12:58:29 by aviscogl         ###   ########lyon.fr   */
+/*   Updated: 2023/07/14 13:37:26 by aviscogl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	*ft_philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	philo->info->start = ft_get_time();
 	while (1)
 	{
 		ft_eat(philo);
@@ -29,10 +30,8 @@ static void	*ft_philo_routine(void *arg)
 int	ft_start_routine(t_info *info)
 {
 	int				i;
-	struct timeval	time;
 
 	i = 0;
-	gettimeofday(&time, NULL);
 	while (i < info->number_ph)
 	{
 		if (pthread_create(&info->philo[i].thread, NULL, \
@@ -44,7 +43,6 @@ int	ft_start_routine(t_info *info)
 		i++;
 	}
 	i = 0;
-	info->start = ft_get_time();
 	while (i < info->number_ph)
 	{
 		if (pthread_join(info->philo[i].thread, NULL))

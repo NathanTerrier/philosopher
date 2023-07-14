@@ -6,7 +6,7 @@
 /*   By: aviscogl <aviscogl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:16:41 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/14 01:08:28 by aviscogl         ###   ########lyon.fr   */
+/*   Updated: 2023/07/14 13:52:18 by aviscogl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_eat(t_philo *philo)
 {
+	ft_check_ded(philo);
 	ft_all_eat(philo);
 	if (pthread_mutex_lock(philo->lfork))
 		return ;
@@ -31,10 +32,10 @@ void	ft_eat(t_philo *philo)
 
 void	ft_sleep(t_philo *philo)
 {
+	ft_check_ded(philo);
 	ft_all_eat(philo);
 	ft_print(philo, "is sleeping");
 	ft_usleep(philo, philo->info->sleep);
-	ft_check_ded(philo);
 }
 
 void	ft_think(t_philo *philo)
@@ -46,11 +47,18 @@ void	ft_think(t_philo *philo)
 
 void	ft_check_ded(t_philo *philo)
 {
+	int	i;
+
+	i = 0;
 	ft_all_eat(philo);
-	if (philo->last_eat <= (ft_get_time() - philo->info->start) - philo->info->die)
+	while (i <  philo->info->number_ph)
 	{
-		ft_print(philo, "is dead");
-		ft_exit(philo, 0);
+		if (philo->info->philo[i].last_eat <= (ft_get_time() - philo->info->start) - philo->info->die)
+		{
+			ft_print(&philo->info->philo[i], "is dead");
+			ft_exit(philo, 0);
+		}
+		i++;
 	}
 }
 
@@ -59,7 +67,7 @@ void	ft_all_eat(t_philo *philo)
 	int	i;
 
 	i = 0;
-	if (philo->info->must_eat <= 0)
+	if (philo->info->must_eat == 0)
 		return ;
 	while (i < philo->info->number_ph)
 	{

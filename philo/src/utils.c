@@ -6,7 +6,7 @@
 /*   By: aviscogl <aviscogl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:16:41 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/13 13:02:50 by aviscogl         ###   ########lyon.fr   */
+/*   Updated: 2023/07/14 13:51:17 by aviscogl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_usleep(t_philo *philo, int time)
 		ft_check_ded(philo);
 		usleep(100);
 	}
+	ft_check_ded(philo);
 }
 
 void	ft_print(t_philo *philo, char *str)

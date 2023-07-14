@@ -66,6 +66,7 @@ static int	ft_init_philo(t_info *info)
 		info->philo[i].last_eat = 0;
 		info->philo[i].eat_count = 0;
 		info->philo[i].info = info;
+		
 		if (i != 0)
 			info->philo[i].lfork = &info->philo[i - 1].fork;
 		if (pthread_mutex_init(&info->philo[i].fork, NULL))
