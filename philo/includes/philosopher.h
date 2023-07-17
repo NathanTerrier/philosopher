@@ -26,6 +26,7 @@ typedef struct s_info
 	int				eat;
 	int				sleep;
 	int				must_eat;
+	int				dead;
 	long long int	start;
 	struct s_philo	*philo;
 }	t_info;
@@ -39,6 +40,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*lfork;
 	pthread_mutex_t	fork;
+	int				dead;
 }	t_philo;
 
 // Parsing //

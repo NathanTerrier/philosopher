@@ -6,7 +6,7 @@
 /*   By: aviscogl <aviscogl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:16:41 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/14 13:51:17 by aviscogl         ###   ########lyon.fr   */
+/*   Updated: 2023/07/17 22:34:30 by aviscogl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void	ft_print(t_philo *philo, char *str)
 	long long int	time;
 
 	time = ft_get_time();
+	ft_all_eat(philo);
+	if (philo->info->dead == 1 && philo->dead == 0)
+		return ;
 	printf("%lld %d %s\n", time - philo->info->start, philo->id, str);
 }
 
