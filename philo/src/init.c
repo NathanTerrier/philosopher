@@ -56,7 +56,6 @@ static int	ft_init_philo(t_info *info)
 	int	i;
 
 	i = 0;
-
 	info->philo = malloc(sizeof(t_philo) * info->number_ph);
 	if (!info->philo)
 		return (printf("Philo error: malloc error\n"), exit(1), 1);

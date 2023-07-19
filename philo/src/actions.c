@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aviscogl <aviscogl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:16:41 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/17 22:34:27 by aviscogl         ###   ########lyon.fr   */
+/*   Updated: 2023/07/19 07:58:09 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	ft_eat(t_philo *philo)
 {
-	if (pthread_mutex_lock(philo->lfork))
-		return ;
-	if (pthread_mutex_lock(&philo->fork))
-		return ;
-	philo->last_eat = ft_get_time() - philo->info->start;
+	pthread_mutex_lock(philo->lfork);
+	pthread_mutex_lock(&philo->fork);
+	philo->last_eat = ft_actual_time(philo);
 	ft_print(philo, "has taken a fork");
 	ft_print(philo, "is eating");
 	philo->eat_count++;
@@ -41,7 +39,7 @@ void	ft_think(t_philo *philo)
 
 void	ft_check_ded(t_philo *philo)
 {
-	if (philo->last_eat <= (ft_get_time() - philo->info->start) - philo->info->die)
+	if (philo->last_eat <= ft_actual_time(philo) - philo->info->die)
 	{
 		philo->info->dead = 1;
 		philo->dead = 1;

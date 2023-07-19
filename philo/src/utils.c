@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aviscogl <aviscogl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:16:41 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/17 22:34:30 by aviscogl         ###   ########lyon.fr   */
+/*   Updated: 2023/07/19 08:02:07 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ void	ft_usleep(t_philo *philo, int time)
 
 void	ft_print(t_philo *philo, char *str)
 {
-	long long int	time;
-
-	time = ft_get_time();
 	ft_all_eat(philo);
 	if (philo->info->dead == 1 && philo->dead == 0)
 		return ;
-	printf("%lld %d %s\n", time - philo->info->start, philo->id, str);
+	pthread_mutex_lock(&philo->info->print);
+	printf("%d %d %s\n", ft_actual_time(philo), philo->id, str);
+	pthread_mutex_unlock(&philo->info->print);
 }
 
 t_info	*ft_get_info(void)
@@ -53,6 +52,7 @@ void	ft_exit(t_philo *philo, int code)
 		pthread_mutex_destroy(&philo->info->philo[i].fork);
 		i++;
 	}
+	pthread_mutex_destroy(&philo->info->print);
 	free(philo->info->philo);
 	exit (code);
 }

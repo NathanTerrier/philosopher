@@ -22,6 +22,9 @@ int	main(int argc, char **argv)
 		return (1);
 	if (ft_init(&info, argv, argc))
 		return (1);
+	if (pthread_mutex_init(&info.print, NULL))
+		return (printf("Philo error: mutex init error\n"), \
+		free(ft_get_info()->philo), exit(1), 1);
 	ft_start_routine(&info);
 	free(info.philo);
 	return (0);

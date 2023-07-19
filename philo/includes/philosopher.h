@@ -29,6 +29,7 @@ typedef struct s_info
 	int				dead;
 	long long int	start;
 	struct s_philo	*philo;
+	pthread_mutex_t	print;
 }	t_info;
 
 typedef struct s_philo
@@ -67,5 +68,6 @@ t_info	*ft_get_info(void);
 
 // Time //
 int		ft_get_time(void);
+int		ft_actual_time(t_philo *philo);
 
 #endif
