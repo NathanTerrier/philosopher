@@ -6,53 +6,63 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:16:41 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/19 08:02:07 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2023/07/20 14:15:24 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-void	ft_usleep(t_philo *philo, int time)
+int	ft_usleep(t_philo *philo, int time)
 {
 	long long int	start;
 
 	start = ft_get_time();
 	while (ft_get_time() - start < time)
 	{
-		ft_check_ded(philo);
+		if (ft_check_ded(philo))
+			return (1);
 		usleep(100);
 	}
-	ft_check_ded(philo);
+	if (ft_check_ded(philo))
+		return (1);
+	return (0);
 }
 
-void	ft_print(t_philo *philo, char *str)
+int	ft_print(t_philo *philo, char *str)
 {
-	ft_all_eat(philo);
+	if (ft_all_eat(philo))
+		return (1);
 	if (philo->info->dead == 1 && philo->dead == 0)
-		return ;
+		return (0);
 	pthread_mutex_lock(&philo->info->print);
 	printf("%d %d %s\n", ft_actual_time(philo), philo->id, str);
 	pthread_mutex_unlock(&philo->info->print);
+	return (0);
 }
 
-t_info	*ft_get_info(void)
+int	ft_unlock(t_philo *philo)
 {
-	static t_info	*info;
-
-	return (info);
+	pthread_mutex_unlock(philo->lfork);
+	pthread_mutex_unlock(&philo->fork);
+	return (1);
 }
 
-void	ft_exit(t_philo *philo, int code)
+void	free_all(t_info *info)
 {
 	int	i;
 
 	i = 0;
-	while (i < philo->info->number_ph)
+	while (i < info->number_ph)
 	{
-		pthread_mutex_destroy(&philo->info->philo[i].fork);
+		pthread_mutex_destroy(&info->philo[i].fork);
 		i++;
 	}
-	pthread_mutex_destroy(&philo->info->print);
-	free(philo->info->philo);
-	exit (code);
+	pthread_mutex_destroy(&info->print);
+	free(info->philo);
+}
+
+void	ft_exit(t_philo *philo)
+{
+	free_all(philo->info);
+	exit(1);
 }
