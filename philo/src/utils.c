@@ -6,7 +6,7 @@
 /*   By: aviscogl <aviscogl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:16:41 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/17 22:34:30 by aviscogl         ###   ########lyon.fr   */
+/*   Updated: 2023/07/22 15:06:16 by aviscogl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_print(t_philo *philo, char *str)
 	if (philo->info->dead == 1 && philo->dead == 0)
 		return ;
 	printf("%lld %d %s\n", time - philo->info->start, philo->id, str);
+	philo->dead = 0;
 }
 
 t_info	*ft_get_info(void)

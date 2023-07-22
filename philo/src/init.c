@@ -14,8 +14,6 @@
 
 static int	check_atoi(t_info *info)
 {
-	if (info->number_ph < 2)
-		return (printf("Philo error: wrong number of philo\n"), 1);
 	if (info->die < 1)
 		return (printf("Philo error: wrong time for die\n"), 1);
 	if (info->eat < 1)
@@ -24,6 +22,10 @@ static int	check_atoi(t_info *info)
 		return (printf("Philo error: wrong time for sleep\n"), 1);
 	if (info->must_eat < 0)
 		return (printf("Philo error: wrong time of eat\n"), 1);
+	if (info->number_ph == 1)
+		return (printf("%d %d is dead\n", info->die, 0), 1);
+	if (info->number_ph < 2)
+		return (printf("Philo error: wrong number of philo\n"), 1);
 	return (0);
 }
 

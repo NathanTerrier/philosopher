@@ -6,7 +6,7 @@
 /*   By: aviscogl <aviscogl@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:16:41 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/17 22:34:27 by aviscogl         ###   ########lyon.fr   */
+/*   Updated: 2023/07/22 15:07:39 by aviscogl         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,21 @@ void	ft_think(t_philo *philo)
 
 void	ft_check_ded(t_philo *philo)
 {
-	if (philo->last_eat <= (ft_get_time() - philo->info->start) - philo->info->die)
+	int	i;
+
+	i = 0;
+	if (philo->info->dead)
+		return ;
+	while (i < philo->info->number_ph)
 	{
-		philo->info->dead = 1;
-		philo->dead = 1;
-		ft_print(philo, "is dead");
-		ft_exit(philo, 0);
+		if (philo->info->philo[i].last_eat <= (ft_get_time() - philo->info->start) - philo->info->die)
+		{
+			philo->info->dead = 1;
+			philo->info->philo[i].dead = 1;
+			ft_print(&philo->info->philo[i], "is dead");
+			ft_exit(philo, 0);
+		}
+		i++;
 	}
 }
 
@@ -63,6 +72,5 @@ void	ft_all_eat(t_philo *philo)
 			return ;
 		i++;
 	}
-	free(philo->info->philo);
-	exit(0);
+	ft_exit(philo, 0);
 }
