@@ -46,37 +46,37 @@ int	ft_think(t_philo *philo)
 
 int	ft_check_ded(t_philo *philo)
 {
-	int	i;
+	atomic_int	ded;
 
-	i = 0;
-	while (i < philo->info->number_ph)
+	ded = ATOMIC_VAR_INIT(0);
+	while (ded < philo->info->number_ph)
 	{
 		if (philo->info->dead == 1)
 			return (1);
-		if (ft_actual_time(philo) - philo->info->philo[i].last_eat >= philo->info->die)
+		if (ft_actual_time(philo) - philo->info->philo[atomic_load(&ded)].last_eat >= philo->info->die)
 		{
 			philo->info->dead = 1;
-			philo->info->philo[i].dead = 1;
-			ft_print(&philo->info->philo[i], "is dead");
+			philo->info->philo[ded].dead = 1;
+			ft_print(&philo->info->philo[atomic_load(&ded)], "is dead");
 			return (1);
 		}
-		i++;
+		atomic_fetch_add(&ded, 1);
 	}
 	return (0);
 }
 
 int	ft_all_eat(t_philo *philo)
 {
-	int	i;
+	atomic_int	eat;
 
-	i = 0;
+	eat = ATOMIC_VAR_INIT(0);
 	if (philo->info->must_eat == 0)
 		return (0);
-	while (i < philo->info->number_ph)
+	while (atomic_load(&eat) < philo->info->number_ph)
 	{
-		if (philo->info->philo[i].eat_count < philo->info->must_eat)
+		if (philo->info->philo[atomic_load(&eat)].eat_count < philo->info->must_eat)
 			return (0);
-		i++;
+		atomic_fetch_add(&eat, 1);
 	}
 	return (1);
 }
