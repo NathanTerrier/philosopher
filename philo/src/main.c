@@ -20,9 +20,12 @@ int	main(int argc, char **argv)
 		return (printf("Philo error: wrong number of args\n"), 1);
 	if (ft_check_args(argv))
 		return (1);
+	if (pthread_mutex_init(&info.print, NULL))
+		return (printf("Philo error: mutex init error\n"), \
+		free(info.philo), exit(1), 1);
 	if (ft_init(&info, argv, argc))
 		return (1);
 	ft_start_routine(&info);
-	free(info.philo);
+	free_all(&info);
 	return (0);
 }

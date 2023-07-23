@@ -73,7 +73,7 @@ static int	ft_init_philo(t_info *info)
 			info->philo[i].lfork = &info->philo[i - 1].fork;
 		if (pthread_mutex_init(&info->philo[i].fork, NULL))
 			return (printf("Philo error: mutex init error\n"), \
-			free(ft_get_info()->philo), exit(1), 1);
+			ft_exit(info->philo), 1);
 		i++;
 	}
 	info->philo[0].lfork = &info->philo[i - 1].fork;

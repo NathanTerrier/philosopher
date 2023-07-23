@@ -19,3 +19,8 @@ int	ft_get_time(void)
 	gettimeofday(&time, NULL);
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
+
+int	ft_actual_time(t_philo *philo)
+{
+	return (ft_get_time() - philo->info->start);
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aviscogl <aviscogl@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:00:33 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/14 13:37:26 by aviscogl         ###   ########lyon.fr   */
+/*   Updated: 2023/07/20 18:18:17 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ static void	*ft_philo_routine(void *arg)
 	philo->info->start = ft_get_time();
 	while (1)
 	{
-		ft_eat(philo);
-		ft_sleep(philo);
-		ft_think(philo);
+		if (ft_eat(philo))
+			return (NULL);
+		if (ft_sleep(philo))
+			return (NULL);
+		if (ft_think(philo))
+			return (NULL);
 	}
 	return (NULL);
 }
@@ -38,7 +41,7 @@ int	ft_start_routine(t_info *info)
 			&ft_philo_routine, &info->philo[i]) != 0)
 		{
 			printf("Philo error: pthread_create\n");
-			exit(1);
+			ft_exit(&info->philo[0]);
 		}
 		i++;
 	}
@@ -47,7 +50,7 @@ int	ft_start_routine(t_info *info)
 	{
 		if (pthread_join(info->philo[i].thread, NULL))
 			return (printf("Philo error: pthread_join\n"), \
-				free(info->philo), exit(1), 1);
+				ft_exit(&info->philo[0]), 1);
 		i++;
 	}
 	return (0);
