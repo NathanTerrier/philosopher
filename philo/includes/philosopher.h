@@ -31,6 +31,7 @@ typedef struct s_info
 	long long int	start;
 	struct s_philo	*philo;
 	pthread_mutex_t	print;
+	pthread_mutex_t	check;
 }	t_info;
 
 typedef struct s_philo

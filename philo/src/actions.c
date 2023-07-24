@@ -21,15 +21,16 @@ int	ft_eat(t_philo *philo)
 	philo->last_eat = ft_actual_time(philo);
 	if (ft_print(philo, "has taken a fork"))
 		return (ft_unlock(philo));
+	if (ft_print(philo, "has taken a fork"))
+		return (ft_unlock(philo));
 	if (ft_print(philo, "is eating"))
 		return (ft_unlock(philo));
 	philo->eat_count++;
 	if (ft_usleep(philo, philo->info->eat))
 		return (ft_unlock(philo));
-	ft_unlock(philo);
 	if (ft_all_eat(philo))
-		return (1);
-	return (0);
+		return (ft_unlock(philo), 1);
+	return (ft_unlock(philo), 0);
 }
 
 int	ft_sleep(t_philo *philo)
@@ -48,20 +49,23 @@ int	ft_check_ded(t_philo *philo)
 {
 	atomic_int	ded;
 
-	ded = ATOMIC_VAR_INIT(0);
+	ded = 0;
+	pthread_mutex_lock(&philo->info->check);
 	while (ded < philo->info->number_ph)
 	{
 		if (philo->info->dead == 1)
-			return (1);
-		if (ft_actual_time(philo) - philo->info->philo[atomic_load(&ded)].last_eat >= philo->info->die)
+			return (pthread_mutex_unlock(&philo->info->check), 1);
+		if (ft_actual_time(philo) - \
+		philo->info->philo[ded].last_eat >= philo->info->die)
 		{
 			philo->info->dead = 1;
 			philo->info->philo[ded].dead = 1;
-			ft_print(&philo->info->philo[atomic_load(&ded)], "is dead");
-			return (1);
+			ft_print(&philo->info->philo[ded], "is dead");
+			return (pthread_mutex_unlock(&philo->info->check), 1);
 		}
-		atomic_fetch_add(&ded, 1);
+		ded++;
 	}
+	pthread_mutex_unlock(&philo->info->check);
 	return (0);
 }
 
@@ -69,14 +73,15 @@ int	ft_all_eat(t_philo *philo)
 {
 	atomic_int	eat;
 
-	eat = ATOMIC_VAR_INIT(0);
+	eat = 0;
 	if (philo->info->must_eat == 0)
 		return (0);
-	while (atomic_load(&eat) < philo->info->number_ph)
+	while (eat < philo->info->number_ph)
 	{
-		if (philo->info->philo[atomic_load(&eat)].eat_count < philo->info->must_eat)
+		if (philo->info->philo[eat].eat_count \
+				< philo->info->must_eat)
 			return (0);
-		atomic_fetch_add(&eat, 1);
+		eat++;
 	}
 	return (1);
 }

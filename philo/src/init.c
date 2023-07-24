@@ -12,6 +12,21 @@
 
 #include "philosopher.h"
 
+int	set_philo(t_philo *philo, t_info *info, int i)
+{
+	philo->id = i;
+	philo->last_eat = 0;
+	philo->eat_count = 0;
+	philo->info = info;
+	philo->dead = 0;
+	if (i != 0)
+		info->philo[i].lfork = &info->philo[i - 1].fork;
+	if (pthread_mutex_init(&philo->fork, NULL))
+		return (printf("Philo error: mutex init error\n"), \
+		ft_exit(info->philo), 1);
+	return (0);
+}
+
 static int	check_atoi(t_info *info)
 {
 	if (info->die < 1)
@@ -58,24 +73,17 @@ static int	ft_init_philo(t_info *info)
 	int	i;
 
 	i = 0;
-
 	info->philo = malloc(sizeof(t_philo) * info->number_ph);
 	if (!info->philo)
 		return (printf("Philo error: malloc error\n"), exit(1), 1);
 	while (i < info->number_ph)
 	{
-		info->philo[i].id = i;
-		info->philo[i].last_eat = 0;
-		info->philo[i].eat_count = 0;
-		info->philo[i].info = info;
-		info->philo[i].dead = 0;
-		if (i != 0)
-			info->philo[i].lfork = &info->philo[i - 1].fork;
-		if (pthread_mutex_init(&info->philo[i].fork, NULL))
-			return (printf("Philo error: mutex init error\n"), \
-			ft_exit(info->philo), 1);
+		set_philo(&info->philo[i], info, i);
 		i++;
 	}
+	if (pthread_mutex_init(&info->check, NULL))
+		return (printf("Philo error: mutex init error\n"), \
+		ft_exit(info->philo), 1);
 	info->philo[0].lfork = &info->philo[i - 1].fork;
 	info->dead = 0;
 	return (0);

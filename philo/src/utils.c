@@ -30,9 +30,9 @@ int	ft_usleep(t_philo *philo, int time)
 
 int	ft_print(t_philo *philo, char *str)
 {
-	if (philo->info->dead == 1 && philo->dead == 0)
-		return (0);
 	pthread_mutex_lock(&philo->info->print);
+	if (philo->info->dead == 1 && philo->dead == 0)
+		return (pthread_mutex_unlock(&philo->info->print), 0);
 	printf("%d %d %s\n", ft_actual_time(philo), philo->id, str);
 	pthread_mutex_unlock(&philo->info->print);
 	philo->dead = 0;
@@ -56,6 +56,7 @@ void	free_all(t_info *info)
 		pthread_mutex_destroy(&info->philo[i].fork);
 		i++;
 	}
+	pthread_mutex_destroy(&info->check);
 	pthread_mutex_destroy(&info->print);
 	free(info->philo);
 }
