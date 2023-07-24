@@ -84,6 +84,9 @@ static int	ft_init_philo(t_info *info)
 	if (pthread_mutex_init(&info->check, NULL))
 		return (printf("Philo error: mutex init error\n"), \
 		ft_exit(info->philo), 1);
+	if (pthread_mutex_init(&info->wait, NULL))
+		return (printf("Philo error: mutex init error\n"), \
+		ft_exit(info->philo), 1);
 	info->philo[0].lfork = &info->philo[i - 1].fork;
 	info->dead = 0;
 	return (0);

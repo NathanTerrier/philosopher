@@ -58,6 +58,7 @@ void	free_all(t_info *info)
 	}
 	pthread_mutex_destroy(&info->check);
 	pthread_mutex_destroy(&info->print);
+	pthread_mutex_destroy(&info->wait);
 	free(info->philo);
 }
 

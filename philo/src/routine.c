@@ -17,6 +17,8 @@ static void	*ft_philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	pthread_mutex_lock(&philo->info->wait);
+	pthread_mutex_unlock(&philo->info->wait);
 	philo->info->start = ft_get_time();
 	while (1)
 	{
@@ -35,6 +37,7 @@ int	ft_start_routine(t_info *info)
 	int				i;
 
 	i = 0;
+	pthread_mutex_lock(&info->wait);
 	while (i < info->number_ph)
 	{
 		if (pthread_create(&info->philo[i].thread, NULL, \
@@ -46,6 +49,7 @@ int	ft_start_routine(t_info *info)
 		i++;
 	}
 	i = 0;
+	pthread_mutex_unlock(&info->wait);
 	while (i < info->number_ph)
 	{
 		if (pthread_join(info->philo[i].thread, NULL))
