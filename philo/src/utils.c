@@ -52,6 +52,8 @@ static void	free_all(t_info *info)
 	pthread_mutex_destroy(&info->check);
 	pthread_mutex_destroy(&info->print);
 	pthread_mutex_destroy(&info->wait);
+	pthread_mutex_destroy(&info->fork);
+	pthread_mutex_destroy(&info->unfork);
 	free(info->philo);
 	free(info->lock);
 }

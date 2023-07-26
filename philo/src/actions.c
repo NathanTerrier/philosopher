@@ -14,7 +14,8 @@
 
 int	ft_eat(t_philo *philo)
 {
-	ft_lock(philo);
+	if (ft_lock(philo))
+		return (1);
 	philo->last_eat = ft_actual_time(philo);
 	if (ft_print(philo, "has taken a fork"))
 		return (ft_unlock(philo));

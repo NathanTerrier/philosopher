@@ -28,12 +28,14 @@ typedef struct s_info
 	int				sleep;
 	int				must_eat;
 	int				dead;
+	int				*lock;
 	long long int	start;
 	struct s_philo	*philo;
+	pthread_mutex_t	fork;
+	pthread_mutex_t	unfork;
 	pthread_mutex_t	print;
 	pthread_mutex_t	check;
 	pthread_mutex_t	wait;
-	int				*lock;
 }	t_info;
 
 typedef struct s_philo

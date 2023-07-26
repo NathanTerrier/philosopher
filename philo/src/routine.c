@@ -20,7 +20,7 @@ static void	*ft_philo_routine(void *arg)
 	pthread_mutex_lock(&philo->info->wait);
 	pthread_mutex_unlock(&philo->info->wait);
 	philo->info->start = ft_get_time();
-	if (philo->id % 2 == 0)
+	if (philo->id % 2 == 1)
 	{
 		if (ft_think(philo))
 			return (NULL);
