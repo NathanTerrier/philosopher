@@ -26,6 +26,6 @@ int	main(int argc, char **argv)
 	if (ft_init(&info, argv, argc))
 		return (1);
 	ft_start_routine(&info);
-	free_all(&info);
+	ft_exit(info.philo);
 	return (0);
 }

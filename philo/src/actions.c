@@ -14,10 +14,7 @@
 
 int	ft_eat(t_philo *philo)
 {
-	pthread_mutex_lock(philo->lfork);
-	pthread_mutex_lock(&philo->fork);
-	if (ft_check_ded(philo))
-		return (ft_unlock(philo), 1);
+	ft_lock(philo);
 	philo->last_eat = ft_actual_time(philo);
 	if (ft_print(philo, "has taken a fork"))
 		return (ft_unlock(philo));

@@ -39,14 +39,7 @@ int	ft_print(t_philo *philo, char *str)
 	return (0);
 }
 
-int	ft_unlock(t_philo *philo)
-{
-	pthread_mutex_unlock(philo->lfork);
-	pthread_mutex_unlock(&philo->fork);
-	return (1);
-}
-
-void	free_all(t_info *info)
+static void	free_all(t_info *info)
 {
 	int	i;
 
@@ -60,10 +53,28 @@ void	free_all(t_info *info)
 	pthread_mutex_destroy(&info->print);
 	pthread_mutex_destroy(&info->wait);
 	free(info->philo);
+	free(info->lock);
 }
 
 void	ft_exit(t_philo *philo)
 {
 	free_all(philo->info);
 	exit(1);
+}
+
+int	init_lock(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	info->lock =  malloc(sizeof(int) * info->number_ph);
+	if (!info->lock)
+		return (printf("Philo error: malloc error\n"), \
+		ft_exit(info->philo), 1);
+	while (i < info->number_ph)
+	{
+		info->lock[i] = 0;
+		i++;
+	}
+	return (0);
 }

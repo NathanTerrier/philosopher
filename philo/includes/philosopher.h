@@ -33,6 +33,7 @@ typedef struct s_info
 	pthread_mutex_t	print;
 	pthread_mutex_t	check;
 	pthread_mutex_t	wait;
+	int				*lock;
 }	t_info;
 
 typedef struct s_philo
@@ -66,9 +67,13 @@ int		ft_check_ded(t_philo *philo);
 // Utils //
 int		ft_usleep(t_philo *philo, int time);
 int		ft_print(t_philo *philo, char *str);
-int		ft_unlock(t_philo *philo);
+int		init_lock(t_info *info);
 void	ft_exit(t_philo *philo);
-void	free_all(t_info *info);
+
+// Mutex //
+int		ft_lock(t_philo *philo);
+int		ft_unlock(t_philo *philo);
+int		init_mutex(t_info *info);
 
 // Time //
 int		ft_get_time(void);
