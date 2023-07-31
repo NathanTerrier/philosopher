@@ -26,40 +26,37 @@ int	init_mutex(t_info *info)
 	return (0);
 }
 
-static int	is_locked(t_philo *philo)
-{
-	int	tmp;
+// static int	is_locked(t_philo *philo)
+// {
+// 	int	tmp;
 
-	if (philo->id == 0)
-		tmp = philo->info->number_ph - 1;
-	else
-		tmp = philo->id - 1;
-	if (tmp == philo->id)
-		return (1);
-	if (philo->info->lock[philo->id] || philo->info->lock[tmp])
-		return (1);
-	ft_print(philo, "has taken a fork");
-	ft_print(philo, "has taken a fork");
-	return (0);
-}
+// 	if (philo->id == 0)
+// 		tmp = philo->info->number_ph - 1;
+// 	else
+// 		tmp = philo->id - 1;
+// 	if (tmp == philo->id)
+// 		return (1);
+// 	if (philo->info->lock[philo->id] || philo->info->lock[tmp])
+// 		return (1);
+// 	ft_print(philo, "has taken a fork");
+// 	ft_print(philo, "has taken a fork");
+// 	return (0);
+// }
 
 int	lock_forks(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->info->fork);
-	while (is_locked(philo))
-	{
-		if (ft_check_ded(philo))
-			return (pthread_mutex_unlock(&philo->info->fork), 1);
-		ft_usleep(philo, 10);
-	}
-	philo->info->lock[philo->id] = 1;
-	if (philo->id == 0)
-		philo->info->lock[philo->info->number_ph - 1] = 1;
-	else
-		philo->info->lock[philo->id - 1] = 1;
+	// while (is_locked(philo))
+	// {
+	// 	if (ft_check_ded(philo))
+	// 		return (1);
+	// }
+	// philo->info->lock[philo->id] = 1;
+	// if (philo->id == 0)
+	// 	philo->info->lock[philo->info->number_ph - 1] = 1;
+	// else
+	// 	philo->info->lock[philo->id - 1] = 1;
 	pthread_mutex_lock(&philo->fork);
 	pthread_mutex_lock(philo->lfork);
-	pthread_mutex_unlock(&philo->info->fork);
 	return (0);
 }
 

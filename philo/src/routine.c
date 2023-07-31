@@ -41,7 +41,7 @@ static void	*ft_philo_routine(void *arg)
 		if (lock_forks(philo))
 			return (NULL);
 		if (ft_eat(philo))
-			return (NULL);
+			return (ft_unlock(philo), NULL);
 		ft_unlock(philo);
 		if (ft_sleep(philo))
 			return (NULL);
