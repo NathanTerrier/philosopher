@@ -21,7 +21,7 @@ int	ft_usleep(t_philo *philo, int time)
 	{
 		if (ft_check_ded(philo))
 			return (1);
-		usleep(100);
+		usleep(500);
 	}
 	if (ft_check_ded(philo))
 		return (1);
@@ -68,7 +68,7 @@ int	init_lock(t_info *info)
 	int	i;
 
 	i = 0;
-	info->lock =  malloc(sizeof(int) * info->number_ph);
+	info->lock = malloc(sizeof(int) * info->number_ph);
 	if (!info->lock)
 		return (printf("Philo error: malloc error\n"), \
 		ft_exit(info->philo), 1);

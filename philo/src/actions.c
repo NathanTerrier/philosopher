@@ -14,15 +14,14 @@
 
 int	ft_eat(t_philo *philo)
 {
-	if (lock_forks(philo))
-		return (1);
 	if (ft_print(philo, "is eating"))
 		return (ft_unlock(philo), 1);
 	philo->last_eat = ft_actual_time(philo);
+	philo->eat_count++;
 	if (ft_usleep(philo, philo->info->eat))
 		return (ft_unlock(philo), 1);
-	philo->eat_count++;
-	ft_unlock(philo);
+	if (ft_all_eat(philo))
+		return (ft_unlock(philo), 1);
 	return (0);
 }
 
@@ -49,7 +48,7 @@ int	ft_check_ded(t_philo *philo)
 		if (philo->info->dead == 1)
 			return (pthread_mutex_unlock(&philo->info->check), 1);
 		if (ft_actual_time(philo) - \
-		philo->info->philo[ded].last_eat >= philo->info->die)
+			philo->info->philo[ded].last_eat >= philo->info->die)
 		{
 			philo->info->dead = 1;
 			philo->info->philo[ded].dead = 1;

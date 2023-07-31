@@ -12,25 +12,19 @@
 
 #include "philo.h"
 
-static int	first_routine(t_philo *philo)
+static void	first_routine(t_philo *philo)
 {
-	if (philo->info->number_ph % 2 != 0)
+	if (philo->id % 2 == 0)
 	{
-		if (philo->id % 2 == 0)
-		{
-			ft_think(philo);
-			usleep(100);
-		}
+		ft_think(philo);
+		usleep(15000);
 	}
-	else
+	else if (philo->id - 1 == philo->info->number_ph \
+		&& philo->info->number_ph > 1)
 	{
-		if (philo->id % 2 != 0)
-		{
-			ft_think(philo);
-			usleep(100);
-		}
+		ft_think(philo);
+		usleep(30000);
 	}
-	return (0);
 }
 
 static void	*ft_philo_routine(void *arg)
@@ -41,14 +35,14 @@ static void	*ft_philo_routine(void *arg)
 	pthread_mutex_lock(&philo->info->wait);
 	pthread_mutex_unlock(&philo->info->wait);
 	philo->info->start = ft_get_time();
-	if (first_routine(philo))
-		return (NULL);
+	first_routine(philo);
 	while (1)
 	{
+		if (lock_forks(philo))
+			return (NULL);
 		if (ft_eat(philo))
 			return (NULL);
-		if (ft_all_eat(philo))
-			return (NULL);
+		ft_unlock(philo);
 		if (ft_sleep(philo))
 			return (NULL);
 		if (ft_think(philo))

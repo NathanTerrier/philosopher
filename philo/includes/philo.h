@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosopher.h                                      :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:18:41 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/01 00:16:41 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2023/07/31 15:30:06 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHER_H
-# define PHILOSOPHER_H
+#ifndef PHILO_H
+# define PHILO_H
 
 # include <stdlib.h>
 # include <unistd.h>
