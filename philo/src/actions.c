@@ -10,25 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosopher.h"
+#include "philo.h"
 
 int	ft_eat(t_philo *philo)
 {
-	if (ft_lock(philo))
+	if (lock_forks(philo))
 		return (1);
-	philo->last_eat = ft_actual_time(philo);
-	if (ft_print(philo, "has taken a fork"))
-		return (ft_unlock(philo));
-	if (ft_print(philo, "has taken a fork"))
-		return (ft_unlock(philo));
 	if (ft_print(philo, "is eating"))
-		return (ft_unlock(philo));
-	philo->eat_count++;
-	if (ft_usleep(philo, philo->info->eat))
-		return (ft_unlock(philo));
-	if (ft_all_eat(philo))
 		return (ft_unlock(philo), 1);
-	return (ft_unlock(philo), 0);
+	philo->last_eat = ft_actual_time(philo);
+	if (ft_usleep(philo, philo->info->eat))
+		return (ft_unlock(philo), 1);
+	philo->eat_count++;
+	ft_unlock(philo);
+	return (0);
 }
 
 int	ft_sleep(t_philo *philo)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosopher.h"
+#include "philo.h"
 
 int init_mutex(t_info *info)
 {
@@ -23,50 +23,48 @@ int init_mutex(t_info *info)
 	if (pthread_mutex_init(&info->fork, NULL))
 		return (printf("Philo error: mutex init error\n"), \
 		ft_exit(info->philo), 1);
-	if (pthread_mutex_init(&info->unfork, NULL))
-		return (printf("Philo error: mutex init error\n"), \
-		ft_exit(info->philo), 1);
 	return (0);
 }
 
 static int	is_locked(t_philo *philo)
 {
-	int	idtemp;
+	int	tmp;
 
 	if (philo->id == 0)
-		idtemp = philo->info->number_ph - 1;
+		tmp = philo->info->number_ph - 1;
 	else
-		idtemp = philo->id - 1;
-	if (philo->info->lock[philo->id] == 1)
+		tmp = philo->id - 1;
+	if (tmp == philo->id)
 		return (1);
-	if (philo->info->lock[idtemp] == 1)
+	if (philo->info->lock[philo->id] || philo->info->lock[tmp])
 		return (1);
+	ft_print(philo, "has taken a fork");
+	ft_print(philo, "has taken a fork");
 	return (0);
 }
 
-int	ft_lock(t_philo *philo)
+int	lock_forks(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->fork);
 	while (is_locked(philo))
 	{
 		if (ft_check_ded(philo))
 			return (pthread_mutex_unlock(&philo->info->fork), 1);
-		usleep(100);
 	}
-	pthread_mutex_lock(philo->lfork);
-	pthread_mutex_lock(&philo->fork);
 	philo->info->lock[philo->id] = 1;
 	if (philo->id == 0)
 		philo->info->lock[philo->info->number_ph - 1] = 1;
 	else
 		philo->info->lock[philo->id - 1] = 1;
+	pthread_mutex_lock(&philo->fork);
+	pthread_mutex_lock(philo->lfork);
 	pthread_mutex_unlock(&philo->info->fork);
 	return (0);
 }
 
 int	ft_unlock(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->info->unfork);
+	pthread_mutex_lock(&philo->info->fork);
 	philo->info->lock[philo->id] = 0;
 	if (philo->id == 0)
 		philo->info->lock[philo->info->number_ph - 1] = 0;
@@ -74,6 +72,6 @@ int	ft_unlock(t_philo *philo)
 		philo->info->lock[philo->id - 1] = 0;
 	pthread_mutex_unlock(philo->lfork);
 	pthread_mutex_unlock(&philo->fork);
-	pthread_mutex_unlock(&philo->info->unfork);
+	pthread_mutex_unlock(&philo->info->fork);
 	return (0);
 }

@@ -10,7 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosopher.h"
+#include "philo.h"
+
+static int	first_routine(t_philo *philo)
+{
+	if (philo->info->number_ph % 2 != 0)
+	{
+		if (philo->id % 2 == 0)
+		{
+			ft_think(philo);
+			usleep(100);
+		}
+	}
+	else
+	{
+		if (philo->id % 2 != 0)
+		{
+			ft_think(philo);
+			usleep(100);
+		}
+	}
+	return (0);
+}
 
 static void	*ft_philo_routine(void *arg)
 {
@@ -20,15 +41,13 @@ static void	*ft_philo_routine(void *arg)
 	pthread_mutex_lock(&philo->info->wait);
 	pthread_mutex_unlock(&philo->info->wait);
 	philo->info->start = ft_get_time();
-	if (philo->id % 2 == 1)
-	{
-		if (ft_think(philo))
-			return (NULL);
-		usleep(100);
-	}
+	if (first_routine(philo))
+		return (NULL);
 	while (1)
 	{
 		if (ft_eat(philo))
+			return (NULL);
+		if (ft_all_eat(philo))
 			return (NULL);
 		if (ft_sleep(philo))
 			return (NULL);
@@ -40,7 +59,7 @@ static void	*ft_philo_routine(void *arg)
 
 int	ft_start_routine(t_info *info)
 {
-	int				i;
+	int	i;
 
 	i = 0;
 	pthread_mutex_lock(&info->wait);

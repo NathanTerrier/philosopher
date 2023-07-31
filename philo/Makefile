@@ -22,7 +22,7 @@ DIR_OBJS := .objs
 
 OBJS =	$(addprefix $(DIR_OBJS)/, $(SRCS:.c=.o))
 
-NAME =	philosopher
+NAME =	philo
 
 CFLAGS = -Wall -Werror -Wextra -I $(INC_DIR) -g3 -pthread
 
