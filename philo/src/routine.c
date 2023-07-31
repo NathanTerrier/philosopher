@@ -18,6 +18,16 @@ static void	*ft_philo_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	philo->info->start = ft_get_time();
+	if (philo->id % 2 == 0)
+	{
+		ft_think(philo);
+		usleep(15000);
+	}
+	else if ((philo->id - 1) == philo->info->number_ph && philo->info->number_ph > 1)
+	{
+		ft_think(philo);
+		usleep(30000);
+	}
 	while (1)
 	{
 		if (ft_eat(philo))

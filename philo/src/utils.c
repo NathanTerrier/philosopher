@@ -21,7 +21,7 @@ int	ft_usleep(t_philo *philo, int time)
 	{
 		if (ft_check_ded(philo))
 			return (1);
-		usleep(100);
+		usleep(500);
 	}
 	if (ft_check_ded(philo))
 		return (1);
