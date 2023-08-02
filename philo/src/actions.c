@@ -14,8 +14,9 @@
 
 int	ft_eat(t_philo *philo)
 {
-	if (ft_print(philo, "is eating"))
+	if (ft_check_ded(philo))
 		return (1);
+	ft_print(philo, "is eating");
 	philo->last_eat = ft_actual_time(philo);
 	philo->eat_count++;
 	if (ft_usleep(philo, philo->info->eat))
@@ -27,8 +28,7 @@ int	ft_eat(t_philo *philo)
 
 int	ft_sleep(t_philo *philo)
 {
-	if (ft_print(philo, "is sleeping"))
-		return (1);
+	ft_print(philo, "is sleeping");
 	return (ft_usleep(philo, philo->info->sleep));
 }
 

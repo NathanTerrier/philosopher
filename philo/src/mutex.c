@@ -45,18 +45,25 @@ int	init_mutex(t_info *info)
 
 int	lock_forks(t_philo *philo)
 {
+	// pthread_mutex_lock(&philo->info->wait);
 	// while (is_locked(philo))
 	// {
-	// 	if (ft_check_ded(philo))
-	// 		return (1);
+	// if (ft_check_ded(philo))
+	// 	return (pthread_mutex_unlock(&philo->info->wait), 1);
 	// }
 	// philo->info->lock[philo->id] = 1;
 	// if (philo->id == 0)
 	// 	philo->info->lock[philo->info->number_ph - 1] = 1;
 	// else
 	// 	philo->info->lock[philo->id - 1] = 1;
+	if (&philo->fork == philo->lfork)
+	{
+		ft_usleep(philo, philo->info->die);
+		return (ft_check_ded(philo));
+	}
 	pthread_mutex_lock(&philo->fork);
 	pthread_mutex_lock(philo->lfork);
+	pthread_mutex_unlock(&philo->info->wait);
 	return (0);
 }
 
