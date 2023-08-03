@@ -22,5 +22,7 @@ int	ft_get_time(void)
 
 int	ft_actual_time(t_philo *philo)
 {
-	return (ft_get_time() - philo->info->start);
+	pthread_mutex_lock(&philo->info->wait);
+	return (pthread_mutex_unlock(&philo->info->wait), \
+		ft_get_time() - philo->info->start);
 }

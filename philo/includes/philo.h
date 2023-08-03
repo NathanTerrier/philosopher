@@ -6,7 +6,7 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:18:41 by naterrie          #+#    #+#             */
-/*   Updated: 2023/07/31 15:30:06 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2023/08/03 14:17:08 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,9 @@ typedef struct s_info
 	int				sleep;
 	int				must_eat;
 	int				dead;
-	int				*lock;
 	long long int	start;
 	struct s_philo	*philo;
-	pthread_mutex_t	fork;
 	pthread_mutex_t	print;
-	pthread_mutex_t	check;
 	pthread_mutex_t	wait;
 }	t_info;
 
@@ -49,6 +46,13 @@ typedef struct s_philo
 	int				dead;
 }	t_philo;
 
+// Actions //
+int		ft_eat(t_philo *philo);
+int		ft_sleep(t_philo *philo);
+int		ft_think(t_philo *philo);
+int		ft_all_eat(t_philo *philo);
+int		ft_check_ded(t_philo *philo);
+
 // Parsing //
 int		ft_check_args(char **args);
 
@@ -58,17 +62,9 @@ int		ft_init(t_info *info, char **argv, int argc);
 // Routine //
 int		ft_start_routine(t_info *info);
 
-// Actions //
-int		ft_eat(t_philo *philo);
-int		ft_sleep(t_philo *philo);
-int		ft_think(t_philo *philo);
-int		ft_all_eat(t_philo *philo);
-int		ft_check_ded(t_philo *philo);
-
 // Utils //
 int		ft_usleep(t_philo *philo, int time);
 int		ft_print(t_philo *philo, char *str);
-int		init_lock(t_info *info);
 void	ft_exit(t_philo *philo);
 
 // Mutex //

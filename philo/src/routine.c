@@ -32,9 +32,10 @@ static void	*ft_philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (philo->id == 0)
+		philo->info->start = ft_get_time();
 	pthread_mutex_lock(&philo->info->wait);
 	pthread_mutex_unlock(&philo->info->wait);
-	philo->info->start = ft_get_time();
 	first_routine(philo);
 	while (1)
 	{

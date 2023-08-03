@@ -43,10 +43,10 @@ int	ft_check_ded(t_philo *philo)
 		return (1);
 	if (ft_actual_time(philo) - philo->last_eat >= philo->info->die)
 	{
-		pthread_mutex_lock(&philo->info->check);
+		pthread_mutex_lock(&philo->info->wait);
 		philo->info->dead = 1;
-		pthread_mutex_unlock(&philo->info->check);
 		philo->dead = 1;
+		pthread_mutex_unlock(&philo->info->wait);
 		ft_print(philo, "is dead");
 		return (1);
 	}
