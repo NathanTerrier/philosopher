@@ -6,7 +6,7 @@
 /*   By: naterrie <naterrie@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:18:41 by naterrie          #+#    #+#             */
-/*   Updated: 2023/08/03 14:17:08 by naterrie         ###   ########lyon.fr   */
+/*   Updated: 2023/08/04 14:58:26 by naterrie         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ typedef struct s_info
 	int				eat;
 	int				sleep;
 	int				must_eat;
-	int				dead;
+	atomic_int		dead;
+	int				isstart;
 	long long int	start;
 	struct s_philo	*philo;
 	pthread_mutex_t	print;
@@ -47,33 +48,33 @@ typedef struct s_philo
 }	t_philo;
 
 // Actions //
-int		ft_eat(t_philo *philo);
-int		ft_sleep(t_philo *philo);
-int		ft_think(t_philo *philo);
-int		ft_all_eat(t_philo *philo);
-int		ft_check_ded(t_philo *philo);
+int	ft_eat(t_philo *philo);
+int	ft_sleep(t_philo *philo);
+int	ft_think(t_philo *philo);
+int	ft_all_eat(t_philo *philo);
+int	ft_check_ded(t_philo *philo);
 
 // Parsing //
-int		ft_check_args(char **args);
+int	ft_check_args(char **args);
 
 // Initialization //
-int		ft_init(t_info *info, char **argv, int argc);
+int	ft_init(t_info *info, char **argv, int argc);
 
 // Routine //
-int		ft_start_routine(t_info *info);
+int	ft_start_routine(t_info *info);
 
 // Utils //
-int		ft_usleep(t_philo *philo, int time);
-int		ft_print(t_philo *philo, char *str);
-void	ft_exit(t_philo *philo);
+int	ft_usleep(t_philo *philo, int time);
+int	ft_print(t_philo *philo, char *str);
+int	ft_return(t_philo *philo);
 
 // Mutex //
-int		lock_forks(t_philo *philo);
-int		ft_unlock(t_philo *philo);
-int		init_mutex(t_info *info);
+int	lock_forks(t_philo *philo);
+int	ft_unlock(t_philo *philo);
+int	init_mutex(t_info *info);
 
 // Time //
-int		ft_get_time(void);
-int		ft_actual_time(t_philo *philo);
+int	ft_get_time(void);
+int	ft_actual_time(t_philo *philo);
 
 #endif

@@ -16,7 +16,7 @@ int	init_mutex(t_info *info)
 {
 	if (pthread_mutex_init(&info->wait, NULL))
 		return (printf("Philo error: mutex init error\n"), \
-		ft_exit(info->philo), 1);
+		ft_return(info->philo));
 	return (0);
 }
 
@@ -27,6 +27,8 @@ int	lock_forks(t_philo *philo)
 		ft_usleep(philo, philo->info->die);
 		return (ft_check_ded(philo));
 	}
+	// if (philo->info->number_ph % 2 != 0)
+	// 	ft_usleep(philo, 5);
 	pthread_mutex_lock(&philo->fork);
 	pthread_mutex_lock(philo->lfork);
 	return (0);

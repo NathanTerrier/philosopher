@@ -25,7 +25,6 @@ OBJS =	$(addprefix $(DIR_OBJS)/, $(SRCS:.c=.o))
 NAME =	philo
 
 CFLAGS = -Wall -Werror -Wextra -I $(INC_DIR) -g3 -pthread
-
 HEADERS = $(NAME).h
 INC_DIR = includes
 INC		= $(addprefix $(INC_DIR)/, $(HEADERS))

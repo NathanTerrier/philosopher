@@ -39,23 +39,18 @@ int	ft_print(t_philo *philo, char *str)
 	return (0);
 }
 
-static void	free_all(t_info *info)
+int	ft_return(t_philo *philo)
 {
 	int	i;
 
 	i = 0;
-	while (i < info->number_ph)
+	while (i < philo->info->number_ph)
 	{
-		pthread_mutex_destroy(&info->philo[i].fork);
+		pthread_mutex_destroy(&philo->info->philo[i].fork);
 		i++;
 	}
-	pthread_mutex_destroy(&info->print);
-	pthread_mutex_destroy(&info->wait);
-	free(info->philo);
-}
-
-void	ft_exit(t_philo *philo)
-{
-	free_all(philo->info);
-	exit(1);
+	pthread_mutex_destroy(&philo->info->print);
+	pthread_mutex_destroy(&philo->info->wait);
+	free(philo);
+	return (1);
 }

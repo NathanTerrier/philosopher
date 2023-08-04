@@ -23,7 +23,7 @@ int	set_philo(t_philo *philo, t_info *info, int i)
 		info->philo[i].lfork = &info->philo[i - 1].fork;
 	if (pthread_mutex_init(&philo->fork, NULL))
 		return (printf("Philo error: mutex init error\n"), \
-		ft_exit(info->philo), 1);
+		ft_return(info->philo));
 	return (0);
 }
 
@@ -81,7 +81,7 @@ static int	ft_init_philo(t_info *info)
 	}
 	if (pthread_mutex_init(&info->wait, NULL))
 		return (printf("Philo error: mutex init error\n"), \
-		ft_exit(info->philo), 1);
+		ft_return(info->philo));
 	info->philo[0].lfork = &info->philo[i - 1].fork;
 	info->dead = 0;
 	return (0);
@@ -97,6 +97,7 @@ int	ft_init(t_info *info, char **argv, int argc)
 		info->must_eat = ft_atoi(argv[5]);
 	else
 		info->must_eat = 0;
+	info->isstart = 0;
 	if (check_atoi(info))
 		return (1);
 	ft_init_philo(info);

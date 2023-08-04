@@ -14,6 +14,13 @@
 
 static void	first_routine(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->info->wait);
+	if (philo->info->isstart == 0)
+	{
+		philo->info->start = ft_get_time();
+		philo->info->isstart = 1;
+	}
+	pthread_mutex_unlock(&philo->info->wait);
 	if (philo->id % 2 == 0)
 	{
 		ft_think(philo);
@@ -64,7 +71,7 @@ int	ft_start_routine(t_info *info)
 			&ft_philo_routine, &info->philo[i]) != 0)
 		{
 			printf("Philo error: pthread_create\n");
-			ft_exit(&info->philo[0]);
+			return (ft_return(&info->philo[0]));
 		}
 		i++;
 	}
@@ -74,7 +81,7 @@ int	ft_start_routine(t_info *info)
 	{
 		if (pthread_join(info->philo[i].thread, NULL))
 			return (printf("Philo error: pthread_join\n"), \
-				ft_exit(&info->philo[0]), 1);
+				ft_return(&info->philo[0]));
 		i++;
 	}
 	return (0);
