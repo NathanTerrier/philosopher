@@ -27,8 +27,6 @@ int	lock_forks(t_philo *philo)
 		ft_usleep(philo, philo->info->die);
 		return (ft_check_ded(philo));
 	}
-	// if (philo->info->number_ph % 2 != 0)
-	// 	ft_usleep(philo, 5);
 	pthread_mutex_lock(&philo->fork);
 	pthread_mutex_lock(philo->lfork);
 	return (0);
